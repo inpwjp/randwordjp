@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Randwordjp::VERSION
   spec.authors       = ["inpjp"]
   spec.email         = ["inpwjp@yokoyama-you.com"]
-  spec.description    = %q{ランダムな文字列を取得する}
-  spec.summary        = %q{ランダムな文字列を取得する}
+  spec.description    = %q{get Japanese random words.}
+  spec.summary        = %q{get Japanese random words.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
