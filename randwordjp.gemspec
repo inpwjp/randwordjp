@@ -6,8 +6,8 @@ require 'randwordjp/version'
 Gem::Specification.new do |spec|
   spec.name          = "randwordjp"
   spec.version       = Randwordjp::VERSION
-  spec.authors       = ["inpjp"]
-  spec.email         = ["inpwjp@yokoyama-you.com"]
+  spec.authors       = ["inpwjp"]
+  spec.email         = ["inpw@mua.biglobe.ne.jp"]
   spec.description    = %q{get Japanese random words.}
   spec.summary        = %q{get Japanese random words.}
   spec.homepage      = ""
