@@ -29,5 +29,8 @@ describe Randwordjp do
     expect(Randwordjp.getZenkakuKataKana(10)).not_to eq(Randwordjp.getZenkakuKataKana(10))
   end
 
+  it 'getTodofuken is not should have next time' do
+    expect(Randwordjp::getTodofuken()).not_to eq(Randwordjp::getTodofuken())
+  end
 end
 
