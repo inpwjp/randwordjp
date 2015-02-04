@@ -115,12 +115,14 @@ module Randwordjp
   end
 
   # String型の都道府県名を取得する
+  # @return [String] 都道府県名
   def self.getTodofuken()
     todofuken_list = YAML.load_file(@yamlfile)["worddata"]["todofuken_list"]
     return todofuken_list.sample()
   end
 
   # Hash型の苗字データを取得する
+  # @return [Hash] {:kanji => 漢字名, :kana => 読み仮名}
   def self.getMyoji()
     db = SQLite3::Database.new(@dbfile)
     sql = "select count(*) from myojilist;"
