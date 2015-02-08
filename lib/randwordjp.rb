@@ -146,7 +146,7 @@ module Randwordjp
     if data[0][3] == 2 
       gender = "F"
     end
-    return {kanji: data[0][1], kana: data[0][2], gender }
+    return {kanji: data[0][1], kana: data[0][2], gender: gender }
     db.close
   end
 
