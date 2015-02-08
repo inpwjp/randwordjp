@@ -140,7 +140,7 @@ module Randwordjp
     db = SQLite3::Database.new(@dbfile)
     sql = "select count(*) from namaelist;"
     id = Random.rand(((db.execute(sql))[0][0]).to_i)
-    sql = "select * from myojilist where id = #{id};"
+    sql = "select * from namaelist where id = #{id};"
     data = db.execute(sql)
     gender = "M"
     if data[0][3] == 2 
