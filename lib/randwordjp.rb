@@ -133,4 +133,21 @@ module Randwordjp
     db.close
   end
 
+  # Hash型の名前データを取得する
+  # genderは男性はMで女性はFになります。
+  # @return [Hash] {:kanji => 漢字名, :kana => 読み仮名, :gender => 性別}
+  def self.getNamae()
+    db = SQLite3::Database.new(@dbfile)
+    sql = "select count(*) from namaelist;"
+    id = Random.rand(((db.execute(sql))[0][0]).to_i)
+    sql = "select * from myojilist where id = #{id};"
+    data = db.execute(sql)
+    gender = "M"
+    if data[0][3] == 2 
+      gender = "F"
+    end
+    return {kanji: data[0][1], kana: data[0][2], gender }
+    db.close
+  end
+
 end
