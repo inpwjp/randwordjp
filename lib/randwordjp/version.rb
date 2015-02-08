@@ -1,3 +1,3 @@
 module Randwordjp
-  VERSION = "0.0.5a"
+  VERSION = "0.0.6"
 end
