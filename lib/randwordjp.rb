@@ -33,10 +33,15 @@ module Randwordjp
 
   # 全角カタカナの文字列を取得する。
   # @param [Integer] length 文字列長
+  # @param [Boolean] opt[:old] 旧仮名文字の利用の可否
   # @return [String] lengthで指定した文字列長の文字列
-  def self.getZenkakuKataKana(length = 10)
+  def self.getZenkakuKataKana(length = 10, opt = {:old => false})
     words = Array.new()
-    base = ('ア'..'ン').to_a
+    if opt[:old]
+      base = ('ア'..'ン').to_a
+    else 
+      base = ('ア'..'ン').to_a.join.gsub(/ヰヱ/,"").split(//)
+    end
     length.times do
       words << base.sample()
     end
@@ -45,10 +50,15 @@ module Randwordjp
 
   # 全角ひらがなの文字列を取得する。
   # @param [Integer] length 文字列長
+  # @param [Boolean] opt[:old] 旧仮名文字の利用の可否
   # @return [String] lengthで指定した文字列長の文字列
-  def self.getZenkakuHiraKana(length = 10 )
+  def self.getZenkakuHiraKana(length = 10 , opt = {:old => false})
     words = Array.new()
-    base = ('あ'..'ん').to_a
+    if opt[:old]
+      base = ('あ'..'ん').to_a
+    else
+      base = ('あ'..'ん').to_a.join.gsub(/ゐゑ/,"").split(//)
+    end
     length.times do
       words << base.sample()
     end
