@@ -94,19 +94,19 @@ describe Randwordjp do
 
   describe "getMyoji" do
     it 'getMyoji is not null' do
-      expect(Randwordjp::getMyoji()).not_to eq nil
+      expect(Randwordjp.getMyoji).not_to eq nil
     end
 
     it 'getMyoji have :kana at return hash' do
-      expect(Randwordjp::getMyoji()[:kana]).not_to eq nil
+      expect(Randwordjp.getMyoji[:kana]).not_to eq nil
     end
 
     it 'getMyoji have :kanji at return hash' do
-      expect(Randwordjp::getMyoji()[:kanji]).not_to eq nil
+      expect(Randwordjp.getMyoji[:kanji]).not_to eq nil
     end
 
     it 'getMyoji is not should have next time' do
-      expect(Randwordjp::getMyoji().to_s).not_to eq(Randwordjp::getMyoji().to_s)
+      expect(Randwordjp.getMyoji.to_s).not_to eq(Randwordjp::getMyoji().to_s)
     end
   end
 end
