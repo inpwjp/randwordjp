@@ -4,12 +4,12 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'randwordjp/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "randwordjp"
+  spec.name          = 'randwordjp'
   spec.version       = Randwordjp::VERSION
   spec.authors       = ['inpwjp']
   spec.email         = ['inpw@mua.biglobe.ne.jp']
-  spec.description    = %q{get Japanese random words.}
-  spec.summary        = %q{get Japanese random words.}
+  spec.description    = 'get Japanese random words.'
+  spec.summary        = 'get Japanese random words.'
   spec.homepage      = ''
   spec.license       = 'MIT'
 
