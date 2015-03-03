@@ -2,7 +2,16 @@
 require 'randwordjp/version'
 require 'date'
 require 'yaml'
-require 'sqlite3'
+@java_platform = false
+if defined?(RUBY_ENGINE) && RUBY_ENGINE == 'jruby'
+  require 'jdbc/sqlite3'
+  require 'java'
+  org.sqlite.JDBC
+  @jdbc_sqlite = 'jdbc:sqlite:'
+  @java_platform = true
+else
+  require 'sqlite3'
+end
 
 # Randwordjp
 # ランダムで日本語文字列などを生成するライブラリとなります。
@@ -136,7 +145,11 @@ module Randwordjp
   # Hash型の苗字データを取得する
   # @return [Hash] :kanji => 漢字名, :kana => 読み仮名
   def self.myoji
-    db = SQLite3::Database.new(@dbfile)
+    if @java_platform
+      db = JavaLang::DriverManager.getConnection(@jdbc_sqlite + @dbfile)
+    else
+      db = SQLite3::Database.new(@dbfile)
+    end
     sql = 'select count(*) from myojilist;'
     id = Random.rand(((db.execute(sql))[0][0]).to_i)
     sql = "select * from myojilist where id = #{id};"
