@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'randwordjp/version'
 require 'date'
 require 'yaml'
@@ -133,7 +134,7 @@ module Randwordjp
   end
 
   # Hash型の苗字データを取得する
-  # @return [Hash] {:kanji => 漢字名, :kana => 読み仮名}
+  # @return [Hash] :kanji => 漢字名, :kana => 読み仮名
   def self.myoji
     db = SQLite3::Database.new(@dbfile)
     sql = 'select count(*) from myojilist;'
@@ -146,7 +147,7 @@ module Randwordjp
 
   # Hash型の名前データを取得する
   # genderは男性はMで女性はFになります。
-  # @return [Hash] {:kanji => 漢字名, :kana => 読み仮名, :gender => 性別}
+  # @return [Hash] :kanji => 漢字名, :kana => 読み仮名, :gender => 性別
   def self.namae
     db = SQLite3::Database.new(@dbfile)
     sql = 'select count(*) from namaelist;'
