@@ -22,3 +22,4 @@ tmp
 mkmf.log
 Guardfile
 .rubocop.yml
+.ruby-version

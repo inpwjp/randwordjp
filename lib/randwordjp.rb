@@ -2,23 +2,23 @@
 require 'randwordjp/version'
 require 'date'
 require 'yaml'
+require 'sequel'
 
 # Randwordjp
 # ランダムで日本語文字列などを生成するライブラリとなります。
 # can get random words(sentence).
 module Randwordjp
-@java_platform = false
+
+  @dbfile = File.dirname(__FILE__) + '/randwordjp.db'
+  @yamlfile = File.dirname(__FILE__) + '/randwordjp.yml'
+
   if defined?(RUBY_ENGINE) && RUBY_ENGINE == 'jruby'
     require 'jdbc/sqlite3'
-    Jdbc::SQLite3.load_driver
-    @jdbc_sqlite = 'jdbc:sqlite:'
-    @java_platform = true
-    @dbfile = 'lib/randwordjp.db'
+    @db_connect = 'jdbc:sqlite:' + @dbfile
   else
     require 'sqlite3'
-    @dbfile = 'lib/randwordjp.db'
+    @db_connect = 'sqlite://' + @dbfile
   end
-  @yamlfile = 'lib/randwordjp.yml'
 
   # 半角数字の文字列を取得する
   # @param [Integer] length 文字列長 # @return [String] lengthで指定した文字列長の数字文字列
@@ -146,32 +146,12 @@ module Randwordjp
   # @return [Hash] :kanji => 漢字名, :kana => 読み仮名
   def self.myoji
     table = 'myojilist'
-    if @java_platform
-      connection = java.sql.DriverManager.getConnection('jdbc:sqlite:lib/randwordjp.db')
-      statement = connection.createStatement() 
-      sql = "select count(*) from #{table};"
-      rs = statement.executeQuery(sql)
-      rs.next
-      count = rs.getObject(1)
-      id = Random.rand(count)
-      sql = "select kanji,yomi from #{table} where id = #{id};"
-      rs = statement.executeQuery(sql)
-      rs.next
-      kanji = rs.getObject(1)
-      kana = rs.getObject(2)
-      connection.close
-    else
-      db = SQLite3::Database.new(@dbfile)
-      sql = "select count(*) from #{table};"
-      count = ((db.execute(sql))[0][0]).to_i
-      id = Random.rand(count)
-      sql = "select * from #{table} where id = #{id};"
-      data = db.execute(sql)
-      db.close
-      kanji = data[0][1]
-      kana = data[0][2]
+    Sequel.connect(@db_connect) do |db|
+      data = db.from(table)
+      id = Random.rand(data.count)
+      @myoji_datum = data.select(:kanji, :yomi).where(id: id).first
     end
-    { kanji: kanji, kana: kana }
+    { kanji: @myoji_datum[:kanji], kana: @myoji_datum[:yomi] }
   end
 
   # Hash型の名前データを取得する
@@ -179,36 +159,15 @@ module Randwordjp
   # @return [Hash] :kanji => 漢字名, :kana => 読み仮名, :gender => 性別
   def self.namae
     table = 'namaelist'
-    if @java_platform
-      connection = java.sql.DriverManager.getConnection('jdbc:sqlite:lib/randwordjp.db')
-      statement = connection.createStatement() 
-      sql = "select count(*) from #{table};"
-      rs = statement.executeQuery(sql)
-      rs.next
-      count = rs.getObject(1)
-      id = Random.rand(count)
-      sql = "select kanji,yomi,gender from #{table} where id = #{id};"
-      rs = statement.executeQuery(sql)
-      rs.next
-      kanji = rs.getObject(1)
-      kana = rs.getObject(2)
-      gender_base = rs.getObject(3)
-      connection.close
-    else
-      db = SQLite3::Database.new(@dbfile)
-      sql = "select count(*) from #{table};"
-      id = Random.rand(((db.execute(sql))[0][0]).to_i)
-      sql = "select * from #{table} where id = #{id};"
-      data = db.execute(sql)
-      kanji = data[0][1]
-      kana = data[0][2]
-      gender_base = data[0][3]
-      db.close
+    Sequel.connect(@db_connect) do |db|
+      data = db.from(table)
+      id = Random.rand(data.count)
+      @namae_datum = data.select(:kanji,:yomi,:gender).where(id: id).first
     end
     gender = 'M'
-    if gender_base == 2
+    if @namae_datum[:gender] == 2
       gender = 'F'
     end
-    { kanji: kanji, kana: kana, gender: gender }
+    { kanji: @namae_datum[:kanji], kana: @namae_datum[:yomi], gender: gender }
   end
 end

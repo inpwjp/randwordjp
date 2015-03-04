@@ -24,6 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec'
+  spec.add_development_dependency 'sequel'
   spec.add_development_dependency 'sqlite3' if $platform.to_s == 'ruby'
   spec.add_development_dependency 'jdbc-sqlite3' if $platform.to_s == 'java'
 end
