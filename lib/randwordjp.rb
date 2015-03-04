@@ -148,7 +148,10 @@ module Randwordjp
     table = 'myojilist'
     Sequel.connect(@db_connect) do |db|
       data = db.from(table)
-      id = Random.rand(data.count)
+      id = Random.rand(data.count + 1)
+      while id == 0
+        id = Random.rand(data.count + 1)
+      end
       @myoji_datum = data.select(:kanji, :yomi).where(id: id).first
     end
     { kanji: @myoji_datum[:kanji], kana: @myoji_datum[:yomi] }
@@ -161,8 +164,11 @@ module Randwordjp
     table = 'namaelist'
     Sequel.connect(@db_connect) do |db|
       data = db.from(table)
-      id = Random.rand(data.count)
-      @namae_datum = data.select(:kanji,:yomi,:gender).where(id: id).first
+      id = Random.rand(data.count + 1)
+      while id == 0
+        id = Random.rand(data.count + 1)
+      end
+      @namae_datum = data.select(:kanji, :yomi, :gender).where(id: id).first
     end
     gender = 'M'
     if @namae_datum[:gender] == 2
