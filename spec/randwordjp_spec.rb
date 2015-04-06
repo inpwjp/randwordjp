@@ -75,6 +75,14 @@ describe Randwordjp do
       expect(Randwordjp.namae).not_to eq nil
     end
 
+    it 'only male data' do
+      expect(Randwordjp.namae(only: :male)).not_to eq nil
+    end
+
+    it 'only female data' do
+      expect(Randwordjp.namae(only: :female)).not_to eq nil
+    end
+
     it 'namae have :kana at return hash' do
       expect(Randwordjp.namae[:kana]).not_to eq nil
     end

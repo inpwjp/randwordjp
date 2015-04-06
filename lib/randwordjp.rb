@@ -159,16 +159,20 @@ module Randwordjp
 
   # Hash型の名前データを取得する
   # genderは男性はMで女性はFになります。
+  # @param [Symbol] opt[:only] :male 男性のみの出力 :female 女性のみの出力
   # @return [Hash] :kanji => 漢字名, :kana => 読み仮名, :gender => 性別
-  def self.namae
+  def self.namae(opt = {only: false } )
     table = 'namaelist'
     Sequel.connect(@db_connect) do |db|
       data = db.from(table)
-      id = Random.rand(data.count + 1)
-      while id == 0
-        id = Random.rand(data.count + 1)
+      if opt[:only] == :male
+        data = data.where(gender: 1)
+      elsif opt[:only] == :female
+        data = data.where(gender: 2)
       end
-      @namae_datum = data.select(:kanji, :yomi, :gender).where(id: id).first
+      no = Random.rand(data.count)
+      data = data.select(:kanji, :yomi, :gender)
+      @namae_datum = data.limit(1).offset(no).first
     end
     gender = 'M'
     if @namae_datum[:gender] == 2
