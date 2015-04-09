@@ -180,4 +180,21 @@ module Randwordjp
     end
     { kanji: @namae_datum[:kanji], kana: @namae_datum[:yomi], gender: gender }
   end
+
+  # 日本の郵便番号を取得します
+  # @param [Symbol] opt[:hyphen] true ハイフンありで出力 false ハイフン無しで出力
+  # @return [String] 郵便番号
+  def self.zip(opt = {hyphen: false } )
+    table = 'ziplist'
+    Sequel.connect(@db_connect) do |db|
+      data = db.from(table)
+      no = Random.rand(data.count)
+      data = data.select(:zip)
+      @zip_data = (data.limit(1).offset(no).first)[:zip]
+    end
+    if opt[:hyphen]
+      return @zip_data[0,3] + "-" + @zip_data[3,4]
+    end
+    return @zip_data
+  end
 end
