@@ -117,4 +117,18 @@ describe Randwordjp do
       expect(Randwordjp.myoji.to_s).not_to eq(Randwordjp.myoji.to_s)
     end
   end
+
+  describe 'zip code' do 
+    it 'zip is should have numeric which is length 7 ' do
+      expect(Randwordjp.zip).to match(/[0-9]{7}/)
+    end
+
+    it 'zip is should have numeric which is [0-9]{3}-[0-9]{4} , when hyphen is true' do
+      expect(Randwordjp.zip(hyphen: true)).to match(/[0-9]{3}-[0-9]{4}/)
+    end
+
+    it 'zip is not should have next time' do
+      expect(Randwordjp.zip).not_to eq(Randwordjp.zip)
+    end
+  end
 end
