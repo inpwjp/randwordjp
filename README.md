@@ -1,6 +1,12 @@
 # Randwordjp
 
-TODO: Write a gem description
+randwordjp is a library for outputting the data of the Japanese at random .
+
+randowrjp output the myoji, namae , Japan's postal code, todofuken .
+
+randwordjpはランダムで日本語のデータを出力するためのライブラリです。
+
+randowrjpは日本語の名前、苗字、日本の郵便番号、都道府県、などの出力を行うことができます。
 
 ## Installation
 
@@ -18,7 +24,21 @@ Or install it yourself as:
 
 ## Usage
 
-Get Japanese random words.
+require first.
+
+		require 'randwordjp'
+
+get namae
+
+		Randwordjp.namae
+
+get myoji
+
+		Randwordjp.myoji
+
+get zip
+
+		Randwordjp.myoji
 
 ## Contributing
 
