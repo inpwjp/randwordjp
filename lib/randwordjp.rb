@@ -129,12 +129,14 @@ module Randwordjp
   end
 
   # Date型の日付を取得する。
-  # @param [Date] date 指定日
-  # @param [Integer] before 指定日より後の最大何日までを対象とする
-  # @param [Integer] after 指定日より前の最大何日までを対象とする
+  # @param [Hash] opts オプション指定
+  # @option opts [Date] :date 指定日
+  # @option opts [Integer] :before 指定日より前の最大何日までを対象とする
+  # @option opts [Integer] :after 指定日より後の最大何日までを対象とする
   # @return [Date] 日付を取得する
-  def self.date(date = Date.today, before = 100, after = 100)
-    (date + (rand(after)) - (rand(before))).to_s
+  def self.date(opts ={ before: 100, after: 100 ,date: Date.today} )
+    opts[:date] ||= Date.today
+    return opts[:date] + (rand(opts[:after].to_i + opts[:before].to_i) - opts[:before].to_i )
   end
 
   # String型の都道府県名を取得する
