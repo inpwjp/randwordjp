@@ -29,12 +29,12 @@ require first.
 
 		require 'randwordjp'
 
-get namae
+get namae(first name)
 名前を取得する
 
 		Randwordjp.namae
 
-get myoji
+get myoji(family name)
 苗字を取得する
 
 		Randwordjp.myoji
