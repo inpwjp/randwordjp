@@ -156,9 +156,9 @@ module Randwordjp
       while id == 0
         id = Random.rand(data.count + 1)
       end
-      @myoji_datum = data.select(:kanji, :yomi).where(id: id).first
+      @myoji_datum = data.select(:kanji, :kana).where(id: id).first
     end
-    { kanji: @myoji_datum[:kanji], kana: @myoji_datum[:yomi] }
+    { kanji: @myoji_datum[:kanji], kana: @myoji_datum[:kana] }
   end
 
   # Hash型の名前データを取得する
@@ -176,14 +176,14 @@ module Randwordjp
         data = data.where(gender: 2)
       end
       no = Random.rand(data.count)
-      data = data.select(:kanji, :yomi, :gender)
+      data = data.select(:kanji, :kana, :gender)
       @namae_datum = data.limit(1).offset(no).first
     end
     gender = 'M'
     if @namae_datum[:gender] == 2
       gender = 'F'
     end
-    { kanji: @namae_datum[:kanji], kana: @namae_datum[:yomi], gender: gender }
+    { kanji: @namae_datum[:kanji], kana: @namae_datum[:kana], gender: gender }
   end
 
   # 日本の郵便番号を取得します
@@ -191,7 +191,7 @@ module Randwordjp
   # @option opts [Boolean] :hyphen true ハイフンありで出力 false ハイフン無しで出力
   # @return [String] 郵便番号
   def self.zip(opts = {hyphen: false } )
-    table = 'ziplist'
+    table = 'addresslist'
     Sequel.connect(@db_connect) do |db|
       data = db.from(table)
       no = Random.rand(data.count)
@@ -202,5 +202,17 @@ module Randwordjp
       return @zip_data[0,3] + "-" + @zip_data[3,4]
     end
     return @zip_data
+  end
+  # 日本の住所（都道府県、市区町村、字町名)を取得します
+  # @return [Hash] :zip => 郵便番号, :kanji_t => 都道府県漢字, :kanji => 漢字 , :kana_t => 都道府県カナ , :kana => カナ
+  def self.address( )
+    table = 'addresslist'
+    Sequel.connect(@db_connect) do |db|
+      data = db.from(table).where(type: 1)
+      no = Random.rand(data.count)
+      data = data.select(:zip, :kanji_t,:kanji,:kana_t, :kana)
+      @address_data = data.limit(1).offset(no).first
+    end
+    return @address_data
   end
 end
