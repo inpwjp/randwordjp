@@ -44,6 +44,11 @@ get zip
 
 		Randwordjp.zip
 
+get address
+住所を取得する
+
+		Randwordjp.address
+
 For more information , please refer to the yardoc.
 
 ## Contributing

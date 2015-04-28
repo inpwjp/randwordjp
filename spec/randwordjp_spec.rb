@@ -131,4 +131,10 @@ describe Randwordjp do
       expect(Randwordjp.zip).not_to eq(Randwordjp.zip)
     end
   end
+
+  describe 'address' do 
+    it 'address is not should have next time' do
+      expect(Randwordjp.address).not_to eq(Randwordjp.address)
+    end
+  end
 end
