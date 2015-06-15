@@ -118,13 +118,14 @@ module Randwordjp
   end
 
   # メールアドレス風の文字列を取得する。
-  # @param [String] randword トップレベルドメインの文字列を指定する。
-  # @param [Integer] local_length ローカルパートの文字列長
-  # @param [Integer] domain_length ドメインパートの文字列長
-  # @return [String] lengthで指定した文字列長の文字列
-  def self.mail_address(randword = 'rand', local_length = 10, domain_length = 10)
-    local_part = alphanumeric_plus(rand(local_length) + 1)
-    domain_part = alphanumeric(rand(domain_length) + 1) + '.' + randword
+  # @param [Hash] opts オプション指定
+  # @option opts [Integer] :local_length ローカルパートの文字列長
+  # @option opts [Integer] :domain_length ドメインパートの文字列長
+  # @option opts [String] :randword トップレベルドメインの文字列を指定する。
+  # @return [String] メールアドレスを取得する　
+  def self.mail_address(opts ={domain: 'rand', local_length: 10, domain_length: 10})
+    local_part = alphanumeric_plus(rand(opts[:local_length]) + 1)
+    domain_part = alphanumeric(rand(opts[:domain_length]) + 1) + '.' + opts[:domain]
     local_part + '@' + domain_part
   end
 

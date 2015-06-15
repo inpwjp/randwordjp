@@ -18,6 +18,10 @@ describe Randwordjp do
     expect(Randwordjp.numeric(10)).not_to eq(Randwordjp.numeric(10))
   end
 
+  it 'mail_address is not nil' do
+    expect(Randwordjp.mail_address).not_to be nil
+  end
+
   describe 'zenkaku_katakana' do
     it 'zenkaku_katakana length is should have set length' do
       expect(Randwordjp.zenkaku_katakana(15).length).to be 15
