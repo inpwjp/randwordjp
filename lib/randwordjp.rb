@@ -30,6 +30,21 @@ module Randwordjp
     words.join
   end
 
+  # マイナンバーの文字列を取得する（チェックデジットはまだ仮設定）
+  def self.mynumber()
+    words = []
+    11.times do
+      words << ('0'..'9').to_a.sample 
+    end
+    chkdigit = 0
+    words.each do |w|
+      chkdigit += w.to_i
+    end
+    chkdigit = chkdigit.to_i % 10
+    words << chkdigit
+    return words.join
+  end
+
   # 全角日本語の文字列を取得する。
   # 漢字は第一水準となる。
   # @param [Integer] length 文字列長
@@ -204,6 +219,7 @@ module Randwordjp
     end
     return @zip_data
   end
+
   # 日本の住所（都道府県、市区町村、字町名)を取得します
   # @param [Hash]  opts オプション設定
   # @option opts [Boolean] :hyphen true 郵便番号をハイフンありで出力 false 郵便番号をハイフン無しで出力
