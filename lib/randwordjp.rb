@@ -96,11 +96,25 @@ module Randwordjp
 
   # ローマ字の文字列を取得する。
   # @param [Integer] length 文字列長
+  # @param [Boolean] opts オプション設定
+  # @option opts [Boolean] :char_case 文字の大小を制限する。
   # @return [String] lengthで指定した文字列長の文字列
-  def self.alphabet(length = 10)
+  def self.alphabet(length = 10, opts = { char_case: :all })
     words = []
-    base = ('a'..'z').to_a
+    base = []
+    case opts[:char_case]
+    when :upper
+      base += ('A'..'Z').to_a
+    when :lower
+      base += ('a'..'z').to_a
+    when :all
+      base += ('A'..'Z').to_a + ('a'..'z').to_a
+    else
+      puts "char_case can set :lower or :upper, :all."
+      return false
+    end
     length.times do
+
       words << base.sample
     end
     words.join
@@ -108,11 +122,24 @@ module Randwordjp
 
   # 数字＋ローマ字の文字列を取得する。
   # @param [Integer] length 文字列長
+  # @param [Boolean] opts オプション設定
+  # @option opts [Boolean] :char_case 文字の大小を制限する。
   # @return [String] lengthで指定した文字列長の文字列
-  def self.alphanumeric(length = 10)
+  def self.alphanumeric(length = 10, opts = { char_case: :all })
     words = []
-    base = ('0'..'9').to_a + ('a'..'z').to_a
-    words << alphabet(1)
+    base = []
+    case opts[:char_case]
+    when :upper
+      base += ('A'..'Z').to_a
+    when :lower
+      base += ('a'..'z').to_a
+    when :all
+      base += ('A'..'Z').to_a + ('a'..'z').to_a
+    else
+      puts "char_case can set :lower or :upper, :all."
+      return false
+    end
+    base += ('0'..'9').to_a
     length.times do
       words << base.sample
     end
@@ -121,10 +148,24 @@ module Randwordjp
 
   # 数字＋ローマ字+記号(-_)の文字列を取得する。
   # @param [Integer] length 文字列長
+  # @param [Boolean] opts オプション設定
+  # @option opts [Boolean] :char_case 文字の大小を制限する。
   # @return [String] lengthで指定した文字列長の文字列
-  def self.alphanumeric_plus(length = 10)
+  def self.alphanumeric_plus(length = 10, opts = { char_case: :all })
     words = []
-    base = ('0'..'9').to_a + ('a'..'z').to_a + ['-', '_']
+    base = []
+    case opts[:char_case]
+    when :upper
+      base += ('A'..'Z').to_a
+    when :lower
+      base += ('a'..'z').to_a
+    when :all
+      base += ('A'..'Z').to_a + ('a'..'z').to_a
+    else
+      puts "char_case can set :lower or :upper, :all."
+      return false
+    end
+    base += ('0'..'9').to_a + ['-', '_']
     words << alphabet(1)
     (length - 1).times do
       words << base.sample
@@ -139,8 +180,8 @@ module Randwordjp
   # @option opts [String] :randword トップレベルドメインの文字列を指定する。
   # @return [String] メールアドレスを取得する　
   def self.mail_address(opts ={domain: 'rand', local_length: 10, domain_length: 10})
-    local_part = alphanumeric_plus(rand(opts[:local_length]) + 1)
-    domain_part = alphanumeric(rand(opts[:domain_length]) + 1) + '.' + opts[:domain]
+    local_part = alphanumeric_plus(rand(opts[:local_length]) + 1, char_case: :lower)
+    domain_part = alphanumeric(rand(opts[:domain_length]) + 1, char_case: :lower) + '.' + opts[:domain]
     local_part + '@' + domain_part
   end
 
