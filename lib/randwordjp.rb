@@ -32,17 +32,13 @@ module Randwordjp
 
   # マイナンバーの文字列を取得する（チェックデジットはまだ仮設定）
   def self.mynumber()
-    words = []
-    11.times do
-      words << ('0'..'9').to_a.sample 
+    words = ""
+    12.times do
+      words +=  ('0'..'9').to_a.sample 
     end
-    chkdigit = 0
-    words.each do |w|
-      chkdigit += w.to_i
-    end
-    chkdigit = chkdigit.to_i % 10
-    words << chkdigit
-    return words.join
+    array_words = words.split("")
+    array_words[(array_words.length - 1)] = generate_mynumber_digit(words.to_s)
+    return array_words.join
   end
 
   # 全角日本語の文字列を取得する。
@@ -279,3 +275,32 @@ module Randwordjp
     return @address_data
   end
 end
+
+private
+  def generate_mynumber_digit(number)
+    if number.to_s.length != 12
+      return false
+    end
+    array_number = number.to_s.split("")
+    array_number = array_number.reverse
+    sum_data = 0
+    array_number.each_index do |i|
+      if i == 0
+        next
+      end
+      p = array_number[i].to_i
+      if i <= 6
+        q = i + 1
+      else
+        q = i - 5
+      end
+      sum_data += p*q
+    end
+    sum_data %= 11
+    if sum_data <= 1
+      sum_data = 0
+    else
+      sum_data = 11 - sum_data 
+    end
+    return sum_data
+  end
