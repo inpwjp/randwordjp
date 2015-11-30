@@ -260,7 +260,7 @@ module Randwordjp
   # 日本の住所（都道府県、市区町村、字町名)を取得します
   # @param [Hash]  opts オプション設定
   # @option opts [Boolean] :hyphen true 郵便番号をハイフンありで出力 false 郵便番号をハイフン無しで出力
-  # @return [Hash] :zip => 郵便番号, :kanji_t => 都道府県漢字, :kanji => 漢字 , :kana_t => 都道府県カナ , :kana => カナ
+  # @return [Hash] :zip => 郵便番号, :kanji_t => 都道府県漢字, :kanji => 漢字 , :kana_t => 都道府県カナ , :kana => カナ, :todofuken_code => 都道府県コード
   def self.address(opts = {hyphen: false} )
     table = 'addresslist'
     Sequel.connect(@db_connect) do |db|
@@ -272,6 +272,13 @@ module Randwordjp
     if opts[:hyphen]
       @address_data[:zip]= @address_data[:zip][0,3] + "-" + @address_data[:zip][3,4]
     end
+    todofuken_list = YAML.load_file(@yamlfile)['worddata']['todofuken_list']
+    todofuken_list.each_index do |i|
+      if todofuken_list[i] == @address_data[:kanji_t]
+        @address_data[:todofuken_code] = format('%02d', (i + 1))
+      end
+    end
+
     return @address_data
   end
 end
