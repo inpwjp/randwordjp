@@ -1,3 +1,5 @@
+https://travis-ci.org/inpwjp/randwordjp.svg?branch=master
+
 # Randwordjp
 
 randwordjp is a library for outputting the data of the Japanese at random .
