@@ -6,3 +6,10 @@ gemspec
 gem 'guard-rspec'
 gem 'guard-rubocop'
 
+platforms :ruby do
+  gem 'sqlite3'
+end
+
+platforms :jruby do
+  gem 'jdbc/sqlite3'
+end

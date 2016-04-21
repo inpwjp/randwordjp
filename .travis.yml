@@ -2,3 +2,7 @@ language: ruby
 rvm:
   - 2.2.5
   - jruby-1.7.19
+install:
+  - bundle install
+script:
+  - bundle exec rake rspec
