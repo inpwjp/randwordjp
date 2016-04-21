@@ -11,5 +11,5 @@ platforms :ruby do
 end
 
 platforms :jruby do
-  gem 'jdbc/sqlite3'
+  gem 'jdbc-sqlite3'
 end
