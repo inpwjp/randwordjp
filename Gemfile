@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 # Specify your gem's dependencies in randwordjp.gemspec
 gemspec
-
+gem 'listen', '2.8.5'
 gem 'guard-rspec'
 gem 'guard-rubocop'
 
