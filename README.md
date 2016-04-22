@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/inpwjp/randwordjp.svg?branch=master)](https://travis-ci.org/inpwjp/randwordjp)
 
+[![Dependency Status](https://gemnasium.com/badges/github.com/inpwjp/randwordjp.svg)](https://gemnasium.com/github.com/inpwjp/randwordjp)
+
 # Randwordjp
 
 randwordjp is a library for outputting the data of the Japanese at random .
